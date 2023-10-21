@@ -1,0 +1,9 @@
+{
+	"name": "azdf-main-athahabee",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5c3cfa38-b396-43d0-9886-71bf3da62948",
+		"tenantId": "1220f94e-b228-4761-9501-da9e83e540ac"
+	}
+}
