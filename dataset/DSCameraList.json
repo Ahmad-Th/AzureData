@@ -1,0 +1,64 @@
+{
+	"name": "DSCameraList",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AZ_LS_CSVFiles",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "FMS - Cameras.csv",
+				"container": "csvs"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Status",
+				"type": "String"
+			},
+			{
+				"name": "Serial",
+				"type": "String"
+			},
+			{
+				"name": "Asset",
+				"type": "String"
+			},
+			{
+				"name": "SIM Number",
+				"type": "String"
+			},
+			{
+				"name": "Last Communication",
+				"type": "String"
+			},
+			{
+				"name": "Last Pending Update",
+				"type": "String"
+			},
+			{
+				"name": "Update Manager",
+				"type": "String"
+			},
+			{
+				"name": "Vision",
+				"type": "String"
+			},
+			{
+				"name": "Telematics",
+				"type": "String"
+			},
+			{
+				"name": "Firmware",
+				"type": "String"
+			}
+		]
+	}
+}
