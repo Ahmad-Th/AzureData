@@ -5,14 +5,31 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "DSCameraList",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1"
+				"source(output(",
+				"          Status as string,",
+				"          Serial as string,",
+				"          Asset as string,",
+				"          {SIM Number} as string,",
+				"          {Last Communication} as string,",
+				"          {Last Pending Update} as string,",
+				"          {Update Manager} as string,",
+				"          Vision as string,",
+				"          Telematics as string,",
+				"          Firmware as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1"
 			]
 		}
 	}
