@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "AZDF_CopyCameras",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
