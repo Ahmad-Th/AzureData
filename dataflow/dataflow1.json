@@ -29,7 +29,9 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false,",
+				"     preferredIntegralType: 'integer',",
+				"     preferredFractionalType: 'decimal') ~> source1"
 			]
 		}
 	}
