@@ -13,7 +13,11 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          Status as integer,",
@@ -31,7 +35,21 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     preferredIntegralType: 'integer',",
-				"     preferredFractionalType: 'decimal') ~> source1"
+				"     preferredFractionalType: 'decimal') ~> source1",
+				"source1 select(mapColumn(",
+				"          Status,",
+				"          Serial,",
+				"          Asset,",
+				"          {SIM Number},",
+				"          {Last Communication},",
+				"          {Last Pending Update},",
+				"          {Update Manager},",
+				"          Vision,",
+				"          Telematics,",
+				"          Firmware",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
