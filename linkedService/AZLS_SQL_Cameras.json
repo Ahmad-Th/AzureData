@@ -1,0 +1,17 @@
+{
+	"name": "AZLS_SQL_Cameras",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AZKV_LinkedService_SQLDB",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "CSCamerasDB"
+			}
+		}
+	}
+}
