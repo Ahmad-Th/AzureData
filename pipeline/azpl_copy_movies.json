@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "azpl_copy_movies",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "azact_CopyMovies",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -15,8 +15,17 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "WebSource"
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "MoviesWebTable",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
