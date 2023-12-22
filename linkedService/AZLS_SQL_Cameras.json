@@ -1,17 +1,11 @@
 {
 	"name": "AZLS_SQL_Cameras",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "AZKV_LinkedService_SQLDB",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "CSCamerasDB"
-			}
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=azsqlsrv-main.database.windows.net;Initial Catalog=AZSQLDB_Cameras"
 		}
 	}
 }
