@@ -19,6 +19,9 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "alterRow1"
 				}
 			],
 			"scriptLines": [
@@ -51,7 +54,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 filter(ERROR_FUNCTION('')) ~> filter1"
+				"select1 filter(",
+				"toDate({Last Communication Date}, \"yyyy-MM-dd HH:mm:ss\") < currentDate()) ~> filter1",
+				"filter1 alterRow() ~> alterRow1"
 			]
 		}
 	}
