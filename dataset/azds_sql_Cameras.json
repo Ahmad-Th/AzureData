@@ -1,0 +1,16 @@
+{
+	"name": "azds_sql_Cameras",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azls_sql_Cameras",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "Common",
+			"table": "Camera"
+		}
+	}
+}
