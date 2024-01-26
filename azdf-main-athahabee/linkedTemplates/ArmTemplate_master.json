@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "azdf-main-athahabee"
+		},
+		"AZ_LS_CSVFiles_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AZ_LS_CSVFiles'"
+		},
+		"azls_sql_Cameras_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'azls_sql_Cameras'"
+		},
+		"AZKV_LinkedService_SQLDB_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://azkv-main-athahabee.vault.azure.net/"
+		},
+		"AZLS_Web_MoviesCSV_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/aws-samples/aws-ml-data-lake-workshop/master/dms/data/movies.csv"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "azdf-main-athahabee_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AZ_LS_CSVFiles_connectionString": {
+						"value": "[parameters('AZ_LS_CSVFiles_connectionString')]"
+					},
+					"azls_sql_Cameras_connectionString": {
+						"value": "[parameters('azls_sql_Cameras_connectionString')]"
+					},
+					"AZKV_LinkedService_SQLDB_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AZKV_LinkedService_SQLDB_properties_typeProperties_baseUrl')]"
+					},
+					"AZLS_Web_MoviesCSV_properties_typeProperties_url": {
+						"value": "[parameters('AZLS_Web_MoviesCSV_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
