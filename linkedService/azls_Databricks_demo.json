@@ -1,0 +1,22 @@
+{
+	"name": "azls_Databricks_demo",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-3998282277342990.10.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/af3c195b-4af3-46ae-a7e2-a40ff5d98d26/resourceGroups/azrg-main-athahabee/providers/Microsoft.Databricks/workspaces/azdatabriks_main",
+			"newClusterNodeType": "Standard_DS3_v2",
+			"newClusterNumOfWorker": "1",
+			"newClusterSparkEnvVars": {
+				"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+			},
+			"newClusterVersion": "apache-spark-2.4.x-scala2.11",
+			"newClusterDriverNodeType": "Standard_DS3_v2",
+			"clusterOption": "Fixed",
+			"newClusterInitScripts": [],
+			"dataSecurityMode": "USER_ISOLATION"
+		}
+	}
+}
