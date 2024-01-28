@@ -1,10 +1,6 @@
 {
 	"name": "MoviesWebTable",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "AZLS_Web_MoviesCSV",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "WebTable",
 		"schema": [],
