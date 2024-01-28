@@ -14,33 +14,12 @@
 		"azls_sql_Cameras_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'azls_sql_Cameras'"
-		},
-		"AZKV_LinkedService_SQLDB_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://azkv-main-athahabee.vault.azure.net/"
-		},
-		"AZLS_Web_MoviesCSV_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://raw.githubusercontent.com/aws-samples/aws-ml-data-lake-workshop/master/dms/data/movies.csv"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/AZKV_LinkedService_SQLDB')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AZKV_LinkedService_SQLDB_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AZ_LS_CSVFiles')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -51,6 +30,31 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('AZ_LS_CSVFiles_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/azls_Databricks_demo')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-3998282277342990.10.azuredatabricks.net",
+					"authentication": "MSI",
+					"workspaceResourceId": "/subscriptions/af3c195b-4af3-46ae-a7e2-a40ff5d98d26/resourceGroups/azrg-main-athahabee/providers/Microsoft.Databricks/workspaces/azdatabriks_main",
+					"newClusterNodeType": "Standard_DS3_v2",
+					"newClusterNumOfWorker": "1",
+					"newClusterSparkEnvVars": {
+						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+					},
+					"newClusterVersion": "apache-spark-2.4.x-scala2.11",
+					"newClusterDriverNodeType": "Standard_DS3_v2",
+					"clusterOption": "Fixed",
+					"newClusterInitScripts": [],
+					"dataSecurityMode": "USER_ISOLATION"
 				}
 			},
 			"dependsOn": []
@@ -169,47 +173,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AZLS_Web_MoviesCSV')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Movies table CSV source",
-				"annotations": [],
-				"type": "Web",
-				"typeProperties": {
-					"url": "[parameters('AZLS_Web_MoviesCSV_properties_typeProperties_url')]",
-					"authenticationType": "Anonymous"
-				},
-				"connectVia": {
-					"referenceName": "AZIR-Main",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AZIR-Main')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MoviesWebTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AZLS_Web_MoviesCSV",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "WebTable",
-				"schema": [],
-				"typeProperties": {
-					"index": 0
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AZLS_Web_MoviesCSV')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AZDF_CopyCameras')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -325,6 +288,33 @@
 							},
 							"traceLevel": "Fine"
 						}
+					},
+					{
+						"name": "Notebook1",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "AZDF_CopyCameras",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/adftoturial/mynotebook"
+						},
+						"linkedServiceName": {
+							"referenceName": "azls_Databricks_demo",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -333,7 +323,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/AZDF_CopyCameras')]"
+				"[concat(variables('factoryId'), '/dataflows/AZDF_CopyCameras')]",
+				"[concat(variables('factoryId'), '/linkedServices/azls_Databricks_demo')]"
 			]
 		}
 	]
