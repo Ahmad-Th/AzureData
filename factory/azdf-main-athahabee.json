@@ -1,5 +1,13 @@
 {
 	"name": "azdf-main-athahabee",
+	"properties": {
+		"globalParameters": {
+			"databaseName": {
+				"type": "string",
+				"value": "test"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
